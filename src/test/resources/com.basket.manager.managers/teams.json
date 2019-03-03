@@ -1,0 +1,366 @@
+[
+  {
+    "id": 1,
+    "name": "Raion Middle School",
+    "teamPlayers": [
+      {
+        "id": 28,
+        "playerEntity": {
+          "id": 2,
+          "firstName": "Masayasu",
+          "lastName": "Takada",
+          "age": 11,
+          "height": 152
+        },
+        "playerPositionEnum": "SHOOTING_GARD"
+      },
+      {
+        "id": 30,
+        "playerEntity": {
+          "id": 1,
+          "firstName": "Kiyomune",
+          "lastName": "Fukuda",
+          "age": 11,
+          "height": 148
+        },
+        "playerPositionEnum": "POINT_GARD"
+      },
+      {
+        "id": 21,
+        "playerEntity": {
+          "id": 16,
+          "firstName": "Fumitoki",
+          "lastName": "Sano",
+          "age": 11,
+          "height": 127
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 17,
+        "playerEntity": {
+          "id": 5,
+          "firstName": "Tsunemori",
+          "lastName": "Fujita",
+          "age": 11,
+          "height": 158
+        },
+        "playerPositionEnum": "CENTER"
+      },
+      {
+        "id": 19,
+        "playerEntity": {
+          "id": 10,
+          "firstName": "Yukihiro",
+          "lastName": "Nishimura",
+          "age": 11,
+          "height": 145
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 24,
+        "playerEntity": {
+          "id": 14,
+          "firstName": "Mamoru",
+          "lastName": "Sugimoto",
+          "age": 11,
+          "height": 144
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 18,
+        "playerEntity": {
+          "id": 9,
+          "firstName": "Saru",
+          "lastName": "Shibata",
+          "age": 11,
+          "height": 159
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 22,
+        "playerEntity": {
+          "id": 12,
+          "firstName": "Masaki",
+          "lastName": "Wada",
+          "age": 11,
+          "height": 152
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 29,
+        "playerEntity": {
+          "id": 3,
+          "firstName": "Masato",
+          "lastName": "Shibata",
+          "age": 11,
+          "height": 155
+        },
+        "playerPositionEnum": "SMALL_FORWARD"
+      },
+      {
+        "id": 20,
+        "playerEntity": {
+          "id": 15,
+          "firstName": "Kiyomasa",
+          "lastName": "Noguchi",
+          "age": 11,
+          "height": 150
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 27,
+        "playerEntity": {
+          "id": 11,
+          "firstName": "Kinnaga",
+          "lastName": "Maeda",
+          "age": 11,
+          "height": 146
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 23,
+        "playerEntity": {
+          "id": 7,
+          "firstName": "Tetsuya",
+          "lastName": "Nomura",
+          "age": 11,
+          "height": 144
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 15,
+        "playerEntity": {
+          "id": 6,
+          "firstName": "Montaro",
+          "lastName": "Sato",
+          "age": 11,
+          "height": 137
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 16,
+        "playerEntity": {
+          "id": 4,
+          "firstName": "Akitsuna",
+          "lastName": "Takahashi",
+          "age": 11,
+          "height": 144
+        },
+        "playerPositionEnum": "POWER_FORWARD"
+      },
+      {
+        "id": 25,
+        "playerEntity": {
+          "id": 8,
+          "firstName": "Akizumi",
+          "lastName": "Aoki",
+          "age": 11,
+          "height": 140
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 26,
+        "playerEntity": {
+          "id": 13,
+          "firstName": "Kinmoto",
+          "lastName": "Inoue",
+          "age": 11,
+          "height": 153
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Doragon Middle School",
+    "teamPlayers": [
+      {
+        "id": 31,
+        "playerEntity": {
+          "id": 29,
+          "firstName": "Benjiro",
+          "lastName": "Nakagawa",
+          "age": 11,
+          "height": 143
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 37,
+        "playerEntity": {
+          "id": 17,
+          "firstName": "Yohei",
+          "lastName": "Morita",
+          "age": 11,
+          "height": 156
+        },
+        "playerPositionEnum": "POINT_GARD"
+      },
+      {
+        "id": 33,
+        "playerEntity": {
+          "id": 24,
+          "firstName": "ShunIchi",
+          "lastName": "Sato",
+          "age": 11,
+          "height": 145
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 38,
+        "playerEntity": {
+          "id": 26,
+          "firstName": "Takeshi",
+          "lastName": "Takahashi",
+          "age": 11,
+          "height": 150
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 42,
+        "playerEntity": {
+          "id": 27,
+          "firstName": "Tomokazu",
+          "lastName": "Fukuda",
+          "age": 11,
+          "height": 152
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 45,
+        "playerEntity": {
+          "id": 23,
+          "firstName": "Kazushi",
+          "lastName": "Matsui",
+          "age": 11,
+          "height": 144
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 44,
+        "playerEntity": {
+          "id": 22,
+          "firstName": "Masamoto",
+          "lastName": "Yokoyama",
+          "age": 11,
+          "height": 156
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 34,
+        "playerEntity": {
+          "id": 31,
+          "firstName": "Kinnaga",
+          "lastName": "Yamazaki",
+          "age": 11,
+          "height": 142
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 40,
+        "playerEntity": {
+          "id": 32,
+          "firstName": "Yasuo",
+          "lastName": "Kondo",
+          "age": 11,
+          "height": 148
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 36,
+        "playerEntity": {
+          "id": 30,
+          "firstName": "Ryosei",
+          "lastName": "Matsuo",
+          "age": 11,
+          "height": 157
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 32,
+        "playerEntity": {
+          "id": 25,
+          "firstName": "Masayuki",
+          "lastName": "Ohno",
+          "age": 11,
+          "height": 128
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 41,
+        "playerEntity": {
+          "id": 19,
+          "firstName": "Fusanari",
+          "lastName": "Ishikawa",
+          "age": 11,
+          "height": 154
+        },
+        "playerPositionEnum": "SMALL_FORWARD"
+      },
+      {
+        "id": 46,
+        "playerEntity": {
+          "id": 18,
+          "firstName": "Fuyufusa",
+          "lastName": "Takagi",
+          "age": 11,
+          "height": 141
+        },
+        "playerPositionEnum": "SHOOTING_GARD"
+      },
+      {
+        "id": 39,
+        "playerEntity": {
+          "id": 21,
+          "firstName": "Masatoki",
+          "lastName": "Yamashita",
+          "age": 11,
+          "height": 158
+        },
+        "playerPositionEnum": "CENTER"
+      },
+      {
+        "id": 35,
+        "playerEntity": {
+          "id": 28,
+          "firstName": "Kiyofusa",
+          "lastName": "Onishi",
+          "age": 11,
+          "height": 155
+        },
+        "playerPositionEnum": "SUBSTITUTE"
+      },
+      {
+        "id": 43,
+        "playerEntity": {
+          "id": 20,
+          "firstName": "Akitsuna",
+          "lastName": "Arai",
+          "age": 11,
+          "height": 146
+        },
+        "playerPositionEnum": "POWER_FORWARD"
+      }
+    ]
+  }
+]
