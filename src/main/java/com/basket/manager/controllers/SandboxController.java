@@ -49,6 +49,12 @@ public class SandboxController {
         return teamService;
     }
 
+    @RequestMapping(value = "/showAllTeams", method = RequestMethod.GET)
+    @Transactional
+    public List<TeamEntity> showAllTeams() {
+        return teamService.getAll();
+    }
+
 
     @RequestMapping(value = "/updatePlayers", method = RequestMethod.GET)
     @Transactional

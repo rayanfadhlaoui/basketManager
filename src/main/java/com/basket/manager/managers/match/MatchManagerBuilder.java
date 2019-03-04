@@ -1,4 +1,4 @@
-package com.basket.manager.managers.matchManager;
+package com.basket.manager.managers.match;
 
 import com.basket.manager.pojos.Team;
 
