@@ -7,6 +7,11 @@ import javax.persistence.*;
 
 @Entity(name = "PlayerEntity")
 @Table(name = "player")
+@NamedQueries({
+        @NamedQuery(name = "player.gePlayerWithoutTeam", query = "SELECT p FROM PlayerEntity p " +
+                "LEFT JOIN TeamPlayerEntity tp on tp.playerEntity.id = p.id " +
+                "WHERE tp.id IS NULL"),
+})
 public class PlayerEntity implements GenericEntity {
 
     @Id

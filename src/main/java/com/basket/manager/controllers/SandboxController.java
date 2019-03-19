@@ -1,7 +1,12 @@
 package com.basket.manager.controllers;
 
+import com.basket.manager.entities.players.NameEntity;
+import com.basket.manager.entities.players.NameTypeEnum;
 import com.basket.manager.entities.players.PlayerEntity;
 import com.basket.manager.entities.teams.*;
+import com.basket.manager.factories.PlayerFactory;
+import com.basket.manager.factories.RandomObjectSupplier;
+import com.basket.manager.services.NamesService;
 import com.basket.manager.services.PlayerService;
 import com.basket.manager.services.TeamService;
 import com.basket.manager.utils.RandomUtils;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/sandbox")
@@ -23,16 +29,23 @@ public class SandboxController {
     @Autowired
     private TeamService teamService;
 
-//    @RequestMapping(value = "/recrutePlayer", method = RequestMethod.GET)
-    @Transactional
-    public TeamService createPlayers() {
+    @Autowired
+    private NamesService namesService;
 
-        List<PlayerEntity> playerEntities = playerService.getAll();
-        List<TeamEntity> teamEntities = teamService.getAll();
+
+    @RequestMapping(value = "/recrutePlayer", method = RequestMethod.GET)
+    @Transactional
+    public List<PlayerEntity> createPlayers() {
+
+        List<PlayerEntity> playerEntities = playerService.gePlayerWithoutTeam();
+        List<TeamEntity> teamEntities = teamService.getTeamsWithoutPlayers();
         int indiceTeam = 0;
         TeamEntity currentTeam = teamEntities.get(indiceTeam);
         int count = 0;
-        for (PlayerEntity playerEntity : playerEntities) {
+        List<PlayerEntity> collect = playerEntities.stream()
+                .sorted((o1, o2) -> 1 - RandomUtils.rand(0, 2))
+                .collect(Collectors.toList());
+        for (PlayerEntity playerEntity : collect) {
             currentTeam.addTeamPlayer(createTeamPlayer(playerEntity, count));
             count++;
             if (count % 16 == 0) {
@@ -46,7 +59,7 @@ public class SandboxController {
         }
 
         teamService.save(teamEntities);
-        return teamService;
+        return collect;
     }
 
     @RequestMapping(value = "/showAllTeams", method = RequestMethod.GET)
@@ -56,20 +69,20 @@ public class SandboxController {
     }
 
 
-    @RequestMapping(value = "/updatePlayers", method = RequestMethod.GET)
+    @RequestMapping(value = "/createPlayer", method = RequestMethod.GET)
     @Transactional
     public void updatePlayers() {
-
-        List<PlayerEntity> playerEntities = playerService.getAll();
-        playerEntities.forEach(p -> {
-            OffensiveSkillsEntity offensiveSkills = new OffensiveSkillsEntity();
-            ShootingSkillsEntity shootingSkills = new ShootingSkillsEntity();
-            shootingSkills.setMiDistance(RandomUtils.rand(1,30));
-            shootingSkills.setThreePoint(RandomUtils.rand(1,20));
-            offensiveSkills.setShootingSkills(shootingSkills);
-            p.setOffensiveSkills(offensiveSkills);
-        });
-
+        List<NameEntity> nameEntities = namesService.getAll();
+        List<String> firstNames = nameEntities.stream()
+                .filter(n -> n.getNameType() == NameTypeEnum.FIRST_NAME)
+                .map(NameEntity::getValue)
+                .collect(Collectors.toList());
+        List<String> lastNames = nameEntities.stream()
+                .filter(n -> n.getNameType() == NameTypeEnum.LAST_NAME)
+                .map(NameEntity::getValue)
+                .collect(Collectors.toList());
+        PlayerFactory playerFactory = new PlayerFactory(new RandomObjectSupplier<>(firstNames), new RandomObjectSupplier<>(lastNames));
+        List<PlayerEntity> playerEntities = playerFactory.create(300);
         playerService.save(playerEntities);
     }
 

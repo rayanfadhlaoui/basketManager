@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GenericService<E extends GenericEntity, T extends GenericRepository<E>> {
 
-    private T repository;
+    protected T repository;
 
     GenericService(T repository) {
         this.repository = repository;

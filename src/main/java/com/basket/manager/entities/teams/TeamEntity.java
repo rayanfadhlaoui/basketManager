@@ -8,6 +8,10 @@ import java.util.Set;
 
 @Entity(name = "TeamEntity")
 @Table(name = "team")
+@NamedQueries({
+        @NamedQuery(name = "team.getTeamsWithoutPlayers", query = "SELECT t FROM TeamEntity t " +
+                "WHERE t.teamPlayers.size = 0"),
+})
 public class TeamEntity implements GenericEntity {
 
     @Id
