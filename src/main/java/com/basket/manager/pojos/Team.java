@@ -2,8 +2,10 @@ package com.basket.manager.pojos;
 
 import com.basket.manager.entities.teams.PlayerPositionEnum;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Team {
     private String name;
@@ -27,6 +29,10 @@ public class Team {
 
     public void incrementScore(int score) {
         this.score += score;
+    }
+
+    public void resetScore() {
+        score = 0;
     }
 
     public int getScore() {

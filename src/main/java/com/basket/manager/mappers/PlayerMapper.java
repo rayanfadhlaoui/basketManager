@@ -2,32 +2,22 @@ package com.basket.manager.mappers;
 
 import com.basket.manager.entities.players.PlayerEntity;
 import com.basket.manager.entities.teams.TeamPlayerEntity;
-import com.basket.manager.pojos.OffensiveSkills;
 import com.basket.manager.pojos.Player;
-import com.basket.manager.pojos.Stats;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
-public class PlayerMapper {
+@Mapper(uses = {SkillMapper.class})
+public interface PlayerMapper {
 
-    private SkillMapper skillMapper;
+    Player entityToPojo(PlayerEntity playerEntity);
 
-    public PlayerMapper() {
-        skillMapper = new SkillMapper();
-    }
-
-    public Player map(TeamPlayerEntity teamPlayer) {
-        Player player = new Player();
-        mapGeneralInformation(teamPlayer, player);
-        OffensiveSkills offensiveSkills = skillMapper.mapOffensiveSkills(teamPlayer.getPlayerEntity().getOffensiveSkills());
-        player.setOffensiveSkills(offensiveSkills);
-        player.setStats(new Stats());
-        return player;
-    }
-
-    private void mapGeneralInformation(TeamPlayerEntity teamPlayer, Player player) {
-        PlayerEntity playerEntity = teamPlayer.getPlayerEntity();
-        player.setFirstName(playerEntity.getFirstName());
-        player.setLastName(playerEntity.getLastName());
-        player.setAge(playerEntity.getAge());
-        player.setHeight(playerEntity.getHeight());
-    }
+    @Mappings({
+            @Mapping(target = "offensiveSkills", source = "playerEntity.offensiveSkills"),
+            @Mapping(target = "firstName", source = "playerEntity.firstName"),
+            @Mapping(target = "lastName", source = "playerEntity.lastName"),
+            @Mapping(target = "age", source = "playerEntity.age"),
+            @Mapping(target = "height", source = "playerEntity.height")
+    })
+    Player entityToPojo(TeamPlayerEntity teamPlayerEntity);
 }

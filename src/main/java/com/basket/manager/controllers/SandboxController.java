@@ -1,9 +1,12 @@
 package com.basket.manager.controllers;
 
+import com.basket.manager.RosterOrganizer;
 import com.basket.manager.entities.players.NameEntity;
 import com.basket.manager.entities.players.NameTypeEnum;
 import com.basket.manager.entities.players.PlayerEntity;
-import com.basket.manager.entities.teams.*;
+import com.basket.manager.entities.teams.PlayerPositionEnum;
+import com.basket.manager.entities.teams.TeamEntity;
+import com.basket.manager.entities.teams.TeamPlayerEntity;
 import com.basket.manager.factories.PlayerFactory;
 import com.basket.manager.factories.RandomObjectSupplier;
 import com.basket.manager.services.NamesService;
@@ -66,6 +69,17 @@ public class SandboxController {
     @Transactional
     public List<TeamEntity> showAllTeams() {
         return teamService.getAll();
+    }
+
+
+    @RequestMapping(value = "/reorganize", method = RequestMethod.GET)
+    @Transactional
+    public List<TeamEntity> reorganize() {
+        List<TeamEntity> teamEntities = teamService.getAll();
+        RosterOrganizer rosterOrganizer = new RosterOrganizer();
+        teamEntities.forEach(rosterOrganizer::reorganize);
+        teamService.save(teamEntities);
+        return teamEntities;
     }
 
 

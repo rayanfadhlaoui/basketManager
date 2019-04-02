@@ -17,8 +17,8 @@ public class MatchManagerBuilder {
         return new MatchManagerBuilder(team1, team2);
     }
 
-    public MatchManagerBuilder withComments() {
-        isCommentsActif = true;
+    public MatchManagerBuilder withComments(boolean withComments) {
+        isCommentsActif = withComments;
         return this;
     }
 
