@@ -16,6 +16,67 @@ CREATE TABLE names
     CONSTRAINT values_type UNIQUE (value, name_type)
 )
 
+
+CREATE SEQUENCE rebounding_skills_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+CREATE TABLE rebounding_skills
+(
+    id integer NOT NULL DEFAULT nextval('rebounding_skills_id_seq'::regclass),
+    position_technics integer not null,
+    timing integer not null,
+    CONSTRAINT rebounding_skills_pkey PRIMARY KEY (id)
+)
+
+CREATE SEQUENCE technical_skills_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+CREATE TABLE technical_skills
+(
+    id integer NOT NULL DEFAULT nextval('technical_skills_id_seq'::regclass),
+    dribble integer not null,
+    CONSTRAINT technical_skills_pkey PRIMARY KEY (id)
+)
+
+CREATE SEQUENCE physical_skills_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+CREATE TABLE physical_skills
+(
+    id integer NOT NULL DEFAULT nextval('physical_skills_id_seq'::regclass),
+    strength integer not null,
+    standing_vertical_jump integer not null,
+    CONSTRAINT physical_skills_pkey PRIMARY KEY (id)
+)
+
+CREATE SEQUENCE shooting_skills_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+CREATE TABLE shooting_skills
+(
+    id integer NOT NULL DEFAULT nextval('shooting_skills_id_seq'::regclass),
+    mi_distance integer not null,
+    three_point integer not null,
+    lay_up integer not null,
+    CONSTRAINT shooting_skills_pkey PRIMARY KEY (id)
+)
+
 CREATE SEQUENCE shooting_skills_id_seq
     INCREMENT 1
     START 1
@@ -63,9 +124,15 @@ CREATE TABLE player
     last_name text NOT NULL,
     age integer NOT NULL,
     height integer NOT NULL,
-    offensive_skills_id integer NOT NULL
+    offensive_skills_id integer NOT NULL,
+    rebounding_skills_id integer NOT NULL,
+    technical_skills_id integer NOT NULL,
+    physical_skills_id integer NOT NULL
     CONSTRAINT player_pkey PRIMARY KEY (id)
     CONSTRAINT offensive_skills_id_fk FOREIGN KEY (offensive_skills_id)
+    CONSTRAINT rebounding_skills_id_fk FOREIGN KEY (rebounding_skills_id)
+    CONSTRAINT physical_skills_id_fk FOREIGN KEY (physical_skills_id)
+    CONSTRAINT technical_skills_id_fk FOREIGN KEY (technical_skills_id)
     REFERENCES offensive_skills (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION

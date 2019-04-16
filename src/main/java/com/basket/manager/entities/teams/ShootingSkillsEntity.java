@@ -19,6 +19,9 @@ public class ShootingSkillsEntity implements GenericEntity {
     @Column(name = "three_point")
     private int threePoint;
 
+    @Column(name = "lay_up")
+    private Integer layUp;
+
     @Override
     public Long getId() {
         return id;
@@ -43,6 +46,14 @@ public class ShootingSkillsEntity implements GenericEntity {
 
     public void setThreePoint(int threePoint) {
         this.threePoint = threePoint;
+    }
+
+    public Integer getLayUp() {
+        return layUp;
+    }
+
+    public void setLayUp(Integer layUp) {
+        this.layUp = layUp;
     }
 }
 

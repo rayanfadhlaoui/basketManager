@@ -1,9 +1,6 @@
 package com.basket.manager.managers;
 
-import com.basket.manager.managers.match.MatchManager;
-import com.basket.manager.managers.match.MatchManagerBuilder;
 import com.basket.manager.entities.teams.TeamEntity;
-import com.basket.manager.pojos.Team;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
@@ -31,7 +28,7 @@ public class MatchManagerTest {
 //        Team team2 = TeamBuilder.init(teamEntities.get(1))
 //                .get();
 //
-//        MatchManager matchManager = MatchManagerBuilder.init(team1, team2)
+//        MatchManager matchManager = MatchBuilder.init(team1, team2)
 //                .withComments()
 //                .get();
 //

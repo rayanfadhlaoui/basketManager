@@ -1,5 +1,8 @@
 package com.basket.manager;
 
+import com.basket.manager.entities.players.skills.PhysicalSkillsEntity;
+import com.basket.manager.entities.players.PlayerEntity;
+import com.basket.manager.entities.players.skills.ReboundingSkillsEntity;
 import com.basket.manager.entities.teams.PlayerPositionEnum;
 import com.basket.manager.entities.teams.ShootingSkillsEntity;
 import com.basket.manager.entities.teams.TeamEntity;
@@ -26,8 +29,18 @@ public class RosterOrganizer {
         starter.get(4).setPlayerPositionEnum(PlayerPositionEnum.CENTER);
     }
 
-    private Integer getPlayerLevel(TeamPlayerEntity teamPlayerEntity) {
-        ShootingSkillsEntity shootingSkills = teamPlayerEntity.getPlayerEntity().getOffensiveSkills().getShootingSkills();
-        return shootingSkills.getMiDistance() * 2 + shootingSkills.getThreePoint() * 3;
+    private Double getPlayerLevel(TeamPlayerEntity teamPlayerEntity) {
+
+        PlayerEntity player = teamPlayerEntity.getPlayer();
+        ShootingSkillsEntity shootingSkills = player.getOffensiveSkills().getShootingSkills();
+        int shootingLevel = shootingSkills.getMiDistance() * 2 + shootingSkills.getThreePoint() * 3; // 500
+
+        ReboundingSkillsEntity reboundingSkills = player.getReboundingSkills();
+        PhysicalSkillsEntity physicalSkills = player.getPhysicalSkills();
+        int positionLevel = physicalSkills.getStrength() + reboundingSkills.getPositionTechnics(); // 200
+        double jumpingLevel = (reboundingSkills.getTiming() + physicalSkills.getStandingVerticalJump()) / 2.0 + (player.getHeight() / 2.2);
+        double reboundLevel = positionLevel / 2.0 + jumpingLevel; // 250
+
+        return shootingLevel + reboundLevel;
     }
 }

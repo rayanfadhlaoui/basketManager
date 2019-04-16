@@ -1,72 +1,77 @@
 package com.basket.manager.pojos;
 
 import com.basket.manager.entities.teams.PlayerPositionEnum;
+import com.basket.manager.functionalities.matches.simulators.*;
 import com.basket.manager.utils.RandomUtils;
 
 public class Strategy {
     public static final Strategy ISOLATION = new Strategy();
-    public static final int HIGHSCHOOL_3_POINT = 606;
+    private static final int POSSESSION_TIME = 24;
+    private static final int POSSESSION_AFTER_REBOUND_TIME = 10;
+    private final ReboundSimulator reboundSimulator = new ReboundSimulator();
+    private final DribbleSimulator dribbleSimulator = new DribbleSimulator(RandomUtils.getRandomNumberSupplier(0, 100));
+    private final ShootSimulator shootSimulator = new ShootSimulator();
+    private final PasseSimulator passeSimulator = new PasseSimulator();
+    private Player playerWithBall;
+    private int timeLeft;
 
     public StrategyResult execute(Team team1, Team team2, int timeLeft) {
-        StrategyResult strategyResult = new StrategyResult(RandomUtils.rand(1, timeLeft));
+        playerWithBall = team1.getPlayer(PlayerPositionEnum.POINT_GARD);
+        StrategyResult strategyResult = new StrategyResult();
+        this.timeLeft = timeLeft;
 
-        Player randomPlayer = getRandomPlayer(team1);
-        int rand = RandomUtils.rand(0, 1);
-        int pointsScored = 0;
-        Stats stats = randomPlayer.getStats();
-        boolean success = false;
+        DribbleResult dribbleResult = dribbleSimulator.dribbleToMidField(playerWithBall, timeLeft);
+        strategyResult.increaseTimeSpent(dribbleResult.getTimeSpent());
 
-        if(rand == 0) {
-            if(shoot(randomPlayer, new Field(HIGHSCHOOL_3_POINT, true))) {
-                pointsScored = 3;
-                success = true;
+        if (dribbleResult.getResult() == DribbleResultEnum.SUCCESS) {
+            boolean offenseHasScored = execute(team1, team2, POSSESSION_TIME - strategyResult.getTimeSpent(), strategyResult);
+            if (!offenseHasScored && getTimeLeft(strategyResult) != 0) {
+                executeRebound(team1, team2, strategyResult);
             }
-            stats.shoot3Points(success);
         }
-        else {
-            if(shoot(randomPlayer, new Field(450, false))) {
-                pointsScored = 2;
-                success = true;
-            }
-            stats.shootMiDistance(success);
-        }
-        strategyResult.setScore(pointsScored);
+
         return strategyResult;
     }
 
-    private boolean shoot(Player player, Field field) {
-        ShootingSkills shootingSkills = player.getOffensiveSkills().getShootingSkills();
-        int probability;
-        if(field.is3Point()) {
-            probability = shootingSkills.get3Points();
-        }
-        else {
-            probability = shootingSkills.getMiDistance();
+    private boolean execute(Team team1, Team team2, int possession, StrategyResult strategyResult) {
+        boolean offenseHasScored = false;
+
+        int timeLeft = getTimeLeft(strategyResult);
+        if (timeLeft != 0) {
+            possession = timeLeft > possession ? possession : timeLeft;
+            if (possession <= 2) {
+                offenseHasScored = shootSimulator.simulateShoot(ShootType.THREE_POINT, playerWithBall, strategyResult);
+                strategyResult.increaseTimeSpent(Math.min(possession, 2));
+            } else {
+                DribbleResult dribbleResult = dribbleSimulator.simulateDribblePlayer(playerWithBall);
+                strategyResult.increaseTimeSpent(dribbleResult.getTimeSpent());
+
+                if (dribbleResult.getResult() == DribbleResultEnum.COMPLETE_SUCCESS) {
+                    offenseHasScored = shootSimulator.simulateLayUp(playerWithBall, strategyResult);
+                } else if (dribbleResult.getResult() == DribbleResultEnum.SUCCESS) {
+                    offenseHasScored = shootSimulator.simulateShoot(playerWithBall, strategyResult);
+                } else if (dribbleResult.getResult() == DribbleResultEnum.FAIL) {
+                    PasseResult passeResult = passeSimulator.simulatePasse(playerWithBall, team1);
+                    if (passeResult.getPasseResultEnum() == PasseResultEnum.SUCCESS) {
+                        playerWithBall = passeResult.getReceiver();
+                        return execute(team1, team2, possession - dribbleResult.getTimeSpent(), strategyResult);
+                    }
+                }
+            }
         }
 
-        return RandomUtils.rand(0, 100) <= probability;
+        return offenseHasScored;
     }
 
-    private Player getRandomPlayer(Team team) {
-        int rand = RandomUtils.rand(0, 4);
-        Player player = null;
-        switch (rand) {
-            case 0:
-                player = team.getPlayer(PlayerPositionEnum.POINT_GARD);
-                break;
-            case 1:
-                player = team.getPlayer(PlayerPositionEnum.SHOOTING_GARD);
-                break;
-            case 2:
-                player = team.getPlayer(PlayerPositionEnum.SMALL_FORWARD);
-                break;
-            case 3:
-                player = team.getPlayer(PlayerPositionEnum.POWER_FORWARD);
-                break;
-            case 4:
-                player = team.getPlayer(PlayerPositionEnum.CENTER);
-                break;
+    private void executeRebound(Team team1, Team team2, StrategyResult strategyResult) {
+        ReboundResult reboundResult = reboundSimulator.simulate(team1, team2);
+        if (reboundResult.offenseHasRebound()) {
+            playerWithBall = reboundResult.getRebounder();
+            execute(team1, team2, POSSESSION_AFTER_REBOUND_TIME, strategyResult);
         }
-        return player;
+    }
+
+    private int getTimeLeft(StrategyResult strategyResult) {
+        return timeLeft - strategyResult.getTimeSpent();
     }
 }

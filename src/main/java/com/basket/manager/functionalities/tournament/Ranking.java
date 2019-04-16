@@ -1,4 +1,4 @@
-package com.basket.manager;
+package com.basket.manager.functionalities.tournament;
 
 import com.basket.manager.pojos.Team;
 
@@ -19,7 +19,7 @@ public class Ranking {
         return winner;
     }
 
-    public void update(int nbMatch) {
+    void update(int nbMatch) {
         switch (nbMatch) {
             case 16:
                 currentRound = RankingEnum.ROUND_32;
@@ -41,18 +41,22 @@ public class Ranking {
         }
     }
 
-    public void addTeam(Team team) {
+    void addTeam(Team team) {
         teamsByRanking.putIfAbsent(currentRound, new ArrayList<>());
         List<Team> teams = teamsByRanking.get(currentRound);
         teams.add(team);
     }
 
-    public void setWinner(Team team) {
+    void setWinner(Team team) {
         this.winner = team;
     }
 
-    public RankingEnum getCurrentRound() {
+    RankingEnum getCurrentRound() {
         return currentRound;
+    }
+
+    public Map<RankingEnum, List<Team>> getTeamsByRanking() {
+        return teamsByRanking;
     }
 
     @Override

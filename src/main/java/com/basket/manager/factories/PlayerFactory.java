@@ -1,6 +1,8 @@
 package com.basket.manager.factories;
 
+import com.basket.manager.entities.players.skills.PhysicalSkillsEntity;
 import com.basket.manager.entities.players.PlayerEntity;
+import com.basket.manager.entities.players.skills.ReboundingSkillsEntity;
 import com.basket.manager.entities.teams.OffensiveSkillsEntity;
 import com.basket.manager.entities.teams.ShootingSkillsEntity;
 import com.basket.manager.utils.RandomUtils;
@@ -29,11 +31,24 @@ public class PlayerFactory {
             playerEntity.setLastName(lastNameSupplier.get());
             playerEntity.setAge(11);
             playerEntity.setHeight(heightSupplier.get());
-            OffensiveSkillsEntity offensiveSkills = createOffensiveSkillsEntity();
-            playerEntity.setOffensiveSkills(offensiveSkills);
+            createSkills(playerEntity);
             playerEntities.add(playerEntity);
         }
         return playerEntities;
+    }
+
+    private void createSkills(PlayerEntity playerEntity) {
+        OffensiveSkillsEntity offensiveSkills = createOffensiveSkillsEntity();
+        ReboundingSkillsEntity reboundingSkillsEntity = new ReboundingSkillsEntity();
+        reboundingSkillsEntity.setPositionTechnics(RandomUtils.rand(1, 25));
+        reboundingSkillsEntity.setTiming(RandomUtils.rand(1, 25));
+        playerEntity.setReboundingSkills(reboundingSkillsEntity);
+
+        PhysicalSkillsEntity physicalSkillsEntity = new PhysicalSkillsEntity();
+        physicalSkillsEntity.setStandingVerticalJump(RandomUtils.rand(1, 25));
+        physicalSkillsEntity.setStrength(RandomUtils.rand(1, 25));
+        playerEntity.setPhysicalSkills(physicalSkillsEntity);
+        playerEntity.setOffensiveSkills(offensiveSkills);
     }
 
     private OffensiveSkillsEntity createOffensiveSkillsEntity() {

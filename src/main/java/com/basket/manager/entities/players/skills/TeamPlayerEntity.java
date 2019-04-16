@@ -1,7 +1,8 @@
-package com.basket.manager.entities.teams;
+package com.basket.manager.entities.players.skills;
 
 import com.basket.manager.entities.GenericEntity;
 import com.basket.manager.entities.players.PlayerEntity;
+import com.basket.manager.entities.teams.PlayerPositionEnum;
 
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ public class TeamPlayerEntity implements GenericEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "player_id")
-    private PlayerEntity player;
+    private PlayerEntity playerEntity;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "player_position")
@@ -40,11 +41,11 @@ public class TeamPlayerEntity implements GenericEntity {
         this.playerPositionEnum = playerPositionEnum;
     }
 
-    public PlayerEntity getPlayer() {
-        return player;
+    public PlayerEntity getPlayerEntity() {
+        return playerEntity;
     }
 
-    public void setPlayer(PlayerEntity player) {
-        this.player = player;
+    public void setPlayerEntity(PlayerEntity playerEntity) {
+        this.playerEntity = playerEntity;
     }
 }

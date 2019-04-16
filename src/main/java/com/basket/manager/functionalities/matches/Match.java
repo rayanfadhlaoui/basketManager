@@ -1,10 +1,12 @@
-package com.basket.manager.managers.match;
+package com.basket.manager.functionalities.matches;
 
+import com.basket.manager.entities.teams.PlayerPositionEnum;
 import com.basket.manager.pojos.*;
 import com.basket.manager.utils.RandomUtils;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-public class MatchManager {
+import java.util.Arrays;
+
+public class Match {
 
     private static final int QUARTER_TIME = 600;
     private static final int PROLONGATION_TIME = 300;
@@ -13,11 +15,11 @@ public class MatchManager {
     private final boolean commentsActivated;
     private Strategy strategy = Strategy.ISOLATION;
 
-    MatchManager(Team team1, Team team2, boolean isCommentsActif) {
+    Match(Team team1, Team team2, boolean isCommentsActive) {
 
         this.team1 = team1;
         this.team2 = team2;
-        this.commentsActivated = isCommentsActif;
+        this.commentsActivated = isCommentsActive;
     }
 
     public Team getWinner() {
@@ -25,25 +27,23 @@ public class MatchManager {
             return team1;
         } else if (team2.getScore() > team1.getScore()) {
             return team2;
-        } else {
-            throw new NotImplementedException();
         }
-    }
 
+        return null;
+    }
 
     public Team getLoser() {
         if (team1.getScore() < team2.getScore()) {
             return team1;
         } else if (team2.getScore() < team1.getScore()) {
             return team2;
-        } else {
-            throw new NotImplementedException();
         }
+
+        return null;
     }
 
     public void simulateAll() {
         resetStats();
-
 
         int rand = RandomUtils.rand(0, 1);
         if (rand == 1) {
@@ -106,21 +106,25 @@ public class MatchManager {
 
         System.out.println("*********DETAIL***********\n");
         System.out.println(team1.getName());
-        team1.getAllPlayers().forEach(this::logPlayerStats);
-        System.out.println("");
-        System.out.println(team2.getName());
-        team2.getAllPlayers().forEach(this::logPlayerStats);
+        Arrays.stream(PlayerPositionEnum.values())
+                .filter(p -> p != PlayerPositionEnum.SUBSTITUTE)
+                .map(team1::getPlayer)
+                .forEach(this::logPlayerStats);
+        System.out.println("\n" + team2.getName());
 
+        Arrays.stream(PlayerPositionEnum.values())
+                .filter(p -> p != PlayerPositionEnum.SUBSTITUTE)
+                .map(team2::getPlayer)
+                .forEach(this::logPlayerStats);
     }
 
     private void logPlayerStats(Player p) {
-        System.out.println(p.getFirstName() + " " + p.getLastName());
+        System.out.println(p.getFirstName() + " " + p.getLastName() + " " + p.getHeight() + " cm");
         System.out.println(p.getStats());
     }
 
     private int executeStrategy(Team team1, Team team2, int timeLeft) {
-        int possession = timeLeft > 24 ? 24 : timeLeft;
-        StrategyResult strategyResult = strategy.execute(team1, team2, possession);
+        StrategyResult strategyResult = strategy.execute(team1, team2, timeLeft);
         team1.incrementScore(strategyResult.getScore());
         return strategyResult.getTimeSpent();
     }

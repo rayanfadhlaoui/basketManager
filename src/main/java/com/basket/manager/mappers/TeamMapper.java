@@ -28,6 +28,7 @@ public class TeamMapper {
     public List<Team> entitiesToPojos(List<TeamEntity> teamEntities) {
         return teamEntities.stream()
                 .map(this::entityToPojo)
+                .peek(team -> team.setReputation(0))
                 .collect(Collectors.toList());
     }
 }

@@ -1,4 +1,4 @@
-package com.basket.manager;
+package com.basket.manager.functionalities.tournament;
 
 public enum RankingEnum {
     LAST_SIXTEEN,

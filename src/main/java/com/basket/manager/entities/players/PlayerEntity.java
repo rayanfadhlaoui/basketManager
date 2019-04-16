@@ -1,6 +1,9 @@
 package com.basket.manager.entities.players;
 
 import com.basket.manager.entities.GenericEntity;
+import com.basket.manager.entities.players.skills.PhysicalSkillsEntity;
+import com.basket.manager.entities.players.skills.ReboundingSkillsEntity;
+import com.basket.manager.entities.players.skills.TechnicalSkillsEntity;
 import com.basket.manager.entities.teams.OffensiveSkillsEntity;
 
 import javax.persistence.*;
@@ -35,6 +38,18 @@ public class PlayerEntity implements GenericEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offensive_skills_id")
     private OffensiveSkillsEntity offensiveSkills;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "technical_skills_id")
+    private TechnicalSkillsEntity technicalSkills;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rebounding_skills_id")
+    private ReboundingSkillsEntity reboundingSkills;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "physical_skills_id")
+    private PhysicalSkillsEntity physicalSkills;
 
     @Override
     public Long getId() {
@@ -84,5 +99,29 @@ public class PlayerEntity implements GenericEntity {
 
     public void setOffensiveSkills(OffensiveSkillsEntity offensiveSkills) {
         this.offensiveSkills = offensiveSkills;
+    }
+
+    public ReboundingSkillsEntity getReboundingSkills() {
+        return reboundingSkills;
+    }
+
+    public void setReboundingSkills(ReboundingSkillsEntity reboundingSkills) {
+        this.reboundingSkills = reboundingSkills;
+    }
+
+    public PhysicalSkillsEntity getPhysicalSkills() {
+        return physicalSkills;
+    }
+
+    public void setPhysicalSkills(PhysicalSkillsEntity physicalSkills) {
+        this.physicalSkills = physicalSkills;
+    }
+
+    public TechnicalSkillsEntity getTechnicalSkills() {
+        return technicalSkills;
+    }
+
+    public void setTechnicalSkills(TechnicalSkillsEntity technicalSkills) {
+        this.technicalSkills = technicalSkills;
     }
 }

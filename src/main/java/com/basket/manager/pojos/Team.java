@@ -12,6 +12,7 @@ public class Team {
     private Map<PlayerPositionEnum, Player> startersByPosition;
     private List<Player> substitues;
     private int score = 0;
+    private int reputation;
 
     public Team(String name) {
         this.name = name;
@@ -51,5 +52,21 @@ public class Team {
         List<Player> players = new ArrayList<>(startersByPosition.values());
         players.addAll(substitues);
         return players;
+    }
+
+    public void setReputation(int reputation) {
+        this.reputation = reputation;
+    }
+
+    public void increaseReputation(int reputation) {
+        if (this.reputation + reputation < 0) {
+            this.reputation = 0;
+        } else {
+            this.reputation += reputation;
+        }
+    }
+
+    public Integer getReputation() {
+        return reputation;
     }
 }

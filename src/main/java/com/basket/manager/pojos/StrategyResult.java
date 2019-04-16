@@ -4,8 +4,8 @@ public class StrategyResult {
     private int timeSpent;
     private int score;
 
-    public StrategyResult(int timeSpent) {
-        this.timeSpent = timeSpent;
+    public StrategyResult() {
+        timeSpent = 0;
         score = 0;
     }
 
@@ -19,5 +19,9 @@ public class StrategyResult {
 
     public int getScore() {
         return score;
+    }
+
+    public void increaseTimeSpent(int timeSpent) {
+        this.timeSpent += timeSpent;
     }
 }

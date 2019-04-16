@@ -1,14 +1,16 @@
 package com.basket.manager.controllers;
 
 import com.basket.manager.RosterOrganizer;
-import com.basket.manager.entities.players.NameEntity;
-import com.basket.manager.entities.players.NameTypeEnum;
-import com.basket.manager.entities.players.PlayerEntity;
+import com.basket.manager.entities.players.*;
+import com.basket.manager.entities.players.skills.PhysicalSkillsEntity;
+import com.basket.manager.entities.players.skills.ReboundingSkillsEntity;
+import com.basket.manager.entities.players.skills.TechnicalSkillsEntity;
 import com.basket.manager.entities.teams.PlayerPositionEnum;
 import com.basket.manager.entities.teams.TeamEntity;
 import com.basket.manager.entities.teams.TeamPlayerEntity;
 import com.basket.manager.factories.PlayerFactory;
 import com.basket.manager.factories.RandomObjectSupplier;
+import com.basket.manager.pojos.TechnicalSkills;
 import com.basket.manager.services.NamesService;
 import com.basket.manager.services.PlayerService;
 import com.basket.manager.services.TeamService;
@@ -34,7 +36,6 @@ public class SandboxController {
 
     @Autowired
     private NamesService namesService;
-
 
     @RequestMapping(value = "/recrutePlayer", method = RequestMethod.GET)
     @Transactional
@@ -83,9 +84,20 @@ public class SandboxController {
     }
 
 
-    @RequestMapping(value = "/createPlayer", method = RequestMethod.GET)
+    @RequestMapping(value = "/updatePlayers", method = RequestMethod.GET)
     @Transactional
     public void updatePlayers() {
+        List<PlayerEntity> all = playerService.getAll();
+        all.forEach(p -> {
+            p.getOffensiveSkills().getShootingSkills().setLayUp(RandomUtils.rand(1, 25));
+        });
+
+        playerService.save(all);
+    }
+
+    @RequestMapping(value = "/createPlayer", method = RequestMethod.GET)
+    @Transactional
+    public void createPlayer() {
         List<NameEntity> nameEntities = namesService.getAll();
         List<String> firstNames = nameEntities.stream()
                 .filter(n -> n.getNameType() == NameTypeEnum.FIRST_NAME)
@@ -110,7 +122,7 @@ public class SandboxController {
 
     private TeamPlayerEntity createTeamPlayer(PlayerEntity playerEntity, int count) {
         TeamPlayerEntity teamPlayerEntity = new TeamPlayerEntity();
-        teamPlayerEntity.setPlayerEntity(playerEntity);
+        teamPlayerEntity.setPlayer(playerEntity);
         teamPlayerEntity.setPlayerPositionEnum(getTeamPlayerEntityPosition(count));
         return teamPlayerEntity;
     }
